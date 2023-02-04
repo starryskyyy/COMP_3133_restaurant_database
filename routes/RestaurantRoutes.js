@@ -43,6 +43,29 @@ app.get('/restaurants', async (req, res) => {
         res.status(500).send(err);
     }
 });
+
+
+// return restaurants details where all cuisines are equal to Delicatessen 
+//and the city is not equal to Brooklyn
+app.get('/restaurants/Delicatessen', async (req, res) => {
+    try {
+        const restaurants = restaurantModel.
+            find({})
+            .where('cuisine').equals('Delicatessen')
+            .where('city').ne('Brooklyn')
+            .sort('name')
+            .select('cuisine name city')
+            .exec((err, data) => {
+                if (err) {
+                    res.send(JSON.stringify({ status: false, message: "No data found" }));
+                } else {
+                    res.send(data);
+                }
+            });
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
 /*  used create new restaurant to see data
 app.post('/restaurant', async (req, res) => {
     const restaurant = new restaurantModel(req.body);
