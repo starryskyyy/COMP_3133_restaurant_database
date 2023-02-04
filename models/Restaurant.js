@@ -32,6 +32,10 @@ const RestaurantSchema = new mongoose.Schema({
         required: [true, "Please provide restaurant name"],
         trim: true
     },
+    restaurant_id: {
+        type: Number
+    },
+
     created: {
         type: Date,
         default: Date.now
