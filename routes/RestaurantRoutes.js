@@ -2,10 +2,21 @@ const express = require('express');
 const restaurantModel = require('../models/Restaurant');
 const app = express();
 
-// read all restaurants 
+
 app.get('/restaurants', async (req, res) => {
 
-    const restaurants = await restaurantModel.find({})
+    let restaurants
+    if (req.query.sortBy !== undefined) {
+        // return: 
+        //The selected columns must include id, cuisines, name, city, resturant_id
+        //The sorting by the restaurant_id in Ascending or Descending Order based on parameter passed.
+        restaurants = await restaurantModel.getRestaurants(req.query.sortBy)
+    }
+    else {
+        // read all restaurants 
+        restaurants = await restaurantModel.find({})
+    }
+
     try {
         res.status(200).send(restaurants);
     } catch (err) {
@@ -28,22 +39,6 @@ app.get('/restaurants/cuisine/:name', async (req, res) => {
         res.status(500).send(err);
     }
 });
-
-// return: 
-//The selected columns must include id, cuisines, name, city, resturant_id
-//The sorting by the restaurant_id in Ascending or Descending Order based on parameter passed.
-
-app.get('/restaurants', async (req, res) => {
-
-    const restaurants = await restaurantModel.getRestaurants(req.query.sortBy)
-
-    try {
-        res.status(200).send(restaurants);
-    } catch (err) {
-        res.status(500).send(err);
-    }
-});
-
 
 // return restaurants details where all cuisines are equal to Delicatessen 
 //and the city is not equal to Brooklyn
