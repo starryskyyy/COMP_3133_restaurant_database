@@ -7,7 +7,7 @@ const app = express()
 app.use(express.json())
 
 const DB_CONNECTION_STRING = process.env.DATABASE_URL
-const SERVER_PORT = process.env.PORT || 8081
+const SERVER_PORT = process.env.PORT || 3000
 mongoose.connect(DB_CONNECTION_STRING, {
   useNewUrlParser: true,
   useUnifiedTopology: true

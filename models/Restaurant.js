@@ -13,7 +13,7 @@ const RestaurantSchema = new mongoose.Schema({
         },
         zipcode: {
             type: String,
-            required: [true, "Please provide zipcode"],
+            default: null,
             trim: true
         }
     },
