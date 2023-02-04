@@ -58,5 +58,9 @@ RestaurantSchema.pre('save', (next) => {
     next()
 });
 
+RestaurantSchema.statics.getRestaurants = function(srt){
+    return this.find({}).select("_id cuisine name city restaurant_id").sort({'restaurant_id': srt})
+  }
+
 const Restaurant = mongoose.model("Restaurant", RestaurantSchema);
 module.exports = Restaurant;
